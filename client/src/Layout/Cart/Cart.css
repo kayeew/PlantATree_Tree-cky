@@ -1,3 +1,9 @@
+.treeViewCart {
+  min-height: 100vh;
+  text-align: center;
+  margin-top: 100px;
+}
+
 .Cart-Tree-Wrapper {
   margin-top: 2%;
   display: flex;

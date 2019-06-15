@@ -3,6 +3,7 @@ import './Cart.css';
 import axios from "axios";
 import { withRouter } from 'react-router'
 import { MDBBtn, MDBCardImage, MDBCol, MDBRow, MDBContainer } from 'mdbreact';
+import { Link } from 'react-router-dom';
 import StripeBtn from "../../components/StripeBtn/StripeBtn";
 
 class Cart extends Component {
@@ -49,33 +50,44 @@ class Cart extends Component {
       }
     
     render() {
-        console.log(this.state.trees)
+        console.log(this.state.trees);
+
+        if (this.state.trees !== null)
+	      if (!this.state.treeslength)
+	        return( 
+	        	<div className="treeViewCart">
+	        		<h3 className="No-items">No items in the cart. Buy something <Link to="/">here</Link></h3>
+	        	</div>
+        	);
+
         return(
-            <div class="treeViewCart">
+            <div className="treeViewCart">
                 <h3 className="CartTile">Cart:</h3>
-                {this.state.trees.map( tree =>            
-                        <MDBContainer className="Cart-Tree-Wrapper">
-                            <MDBRow>
-                                <MDBCol>
-                                    <MDBCardImage className="CartImage"  key={tree.id} src={ tree.imageURL } alt="tree photo" overlay="white-slight" />
-                                </MDBCol>
-                                <MDBCol className="Tree-Details">
-                                    <h2 key={tree.id}>Name: { tree.name }</h2>
-                                    <h2 key={tree.id}>Price: ${ tree.price }</h2>
-                                    <h2 key={tree.id}>Quantity: { tree.quantity}</h2>
-                                    <h2 key={tree.id}>Item total: ${ tree.itemTotal }</h2>
-                                    <MDBRow>
-                                        <form onSubmit={this.handleRemoveTree}>
-                                            <MDBBtn className="" type="submit" onClick={()=>{
-                                                    this.setState({currentId: tree.id});
-                                                }}> Remove from Cart
-                                            </MDBBtn>
-                                        </form>
-                                    </MDBRow>
-                                </MDBCol>
-                            </MDBRow>
-                       </MDBContainer>
-                    )}<div class="CartTotal">
+                {
+                	this.state.trees.map( tree =>            
+                    <MDBContainer className="Cart-Tree-Wrapper">
+                        <MDBRow>
+                            <MDBCol>
+                                <MDBCardImage className="CartImage"  key={tree.id} src={ tree.imageURL } alt="tree photo" overlay="white-slight" />
+                            </MDBCol>
+                            <MDBCol className="Tree-Details">
+                                <h2 key={tree.id}>Name: { tree.name }</h2>
+                                <h2 key={tree.id}>Price: ${ tree.price }</h2>
+                                <h2 key={tree.id}>Quantity: { tree.quantity}</h2>
+                                <h2 key={tree.id}>Item total: ${ tree.itemTotal }</h2>
+                                <MDBRow>
+                                    <form onSubmit={this.handleRemoveTree}>
+                                        <MDBBtn className="" type="submit" onClick={()=>{
+                                                this.setState({currentId: tree.id});
+                                            }}> Remove from Cart
+                                        </MDBBtn>
+                                    </form>
+                                </MDBRow>
+                            </MDBCol>
+                        </MDBRow>
+                   </MDBContainer>
+                )}
+                <div class="CartTotal">
                     <MDBContainer className="Total-Tree-Wrapper">
                         <MDBCol>
                             <MDBRow>
